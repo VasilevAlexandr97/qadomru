@@ -21,6 +21,31 @@ def step(context):
     assert content['result'] == 1
 
 
+# передаем неправильный client_id
+@then('pass incorrect client_id')
+def step(context):
+    params = {
+        'client_id': 'ottweb_device',
+        'timestamp': int(time.time()), 
+        'device_id':'user123'
+    }
+    r = requests.get(f'{context.url}', params=params)
+    content = json.loads(r.content)
+    assert content['result'] == 0
+
+"""
+# Передаем неправильный device_id
+@then('pass incorrect device_id')
+def step(context):
+    params = {
+        'client_id': 'er_ottweb_device',
+        'timestamp': int(time.time()), 
+        'device_id':'user12'
+    }
+    r = requests.get(f'{context.url}', params=params)
+    content = json.loads(r.content)
+    assert content['result'] == 0
+"""
 # Передаем только 1 парамет в запрос
 @then('pass one parametr')
 def step(context):
